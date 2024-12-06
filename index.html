@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Like Button</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+      background-color: #f4f4f4;
+    }
+
+    .like-button {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background-color: transparent;
+      border: none;
+      font-size: 32px;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+
+    .like-button:hover {
+      transform: scale(1.2);
+    }
+
+    .heart {
+      color: #ccc;
+      transition: color 0.3s ease;
+      font-size: 40px;
+    }
+
+    .liked .heart {
+      color: rgb(255, 145, 187); /* Your requested color */
+    }
+
+    .like-count {
+      margin-left: 10px;
+      font-size: 18px;
+      color: #333;
+    }
+  </style>
+</head>
+<body>
+
+  <button class="like-button" id="likeButton">
+    <span class="heart">♡</span>
+    <span class="like-count" id="likeCount">0</span>
+  </button>
+
+  <script>
+    // Get the button and the like count element
+    const likeButton = document.getElementById('likeButton');
+    const heart = likeButton.querySelector('.heart');
+    const likeCount = document.getElementById('likeCount');
+
+    // Initialize like count from localStorage (if available)
+    let likes = localStorage.getItem('likes');
+    if (likes === null) {
+      likes = 0;
+    } else {
+      likes = parseInt(likes, 10);
+    }
+
+    // Update the like count on page load
+    likeCount.textContent = likes;
+
+    // Toggle like/unlike functionality
+    likeButton.addEventListener('click', () => {
+      if (likeButton.classList.contains('liked')) {
+        // If already liked, unlike it
+        likeButton.classList.remove('liked');
+        likes -= 1;
+        heart.textContent = '♡'; // Empty heart
+      } else {
+        // If not liked, like it
+        likeButton.classList.add('liked');
+        likes += 1;
+        heart.textContent = '❤'; // Filled heart
+      }
+      
+      // Update the like count and store it in localStorage
+      likeCount.textContent = likes;
+      localStorage.setItem('likes', likes);
+    });
+  </script>
+
+</body>
+</html>
